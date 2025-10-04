@@ -32,7 +32,7 @@ function writeData(arr) {
 // POST /api/brainrots
 app.post("/api/brainrots", (req, res) => {
   const body = req.body || {};
-  if (!body.name || body.jobId == nil) {
+  if (!body.name || body.jobId == null) {
     return res.status(400).json({ ok: false, error: "name and jobId required" });
   }
 
