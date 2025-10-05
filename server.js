@@ -58,7 +58,7 @@ app.post("/api/brainrots", (req, res) => {
   };
 
   if (idx >= 0) {
-    // actualizar registro existente (mantener orden, actualizar campos y timestamp)
+    // actualizar registro existente
     arr[idx] = Object.assign(arr[idx], record);
   } else {
     arr.push(record);
@@ -71,13 +71,10 @@ app.post("/api/brainrots", (req, res) => {
   res.json({ ok: true, stored: record });
 });
 
-// GET /api/brainrots -> devuelve ordenado por genValue desc, luego detectedAt desc
+// GET /api/brainrots -> devuelve ordenado por fecha (más recientes primero)
 app.get("/api/brainrots", (req, res) => {
   let arr = readData();
-  arr.sort((a,b) => {
-    if (b.genValue !== a.genValue) return b.genValue - a.genValue;
-    return new Date(b.detectedAt) - new Date(a.detectedAt);
-  });
+  arr.sort((a, b) => new Date(b.detectedAt) - new Date(a.detectedAt));
   res.json(arr);
 });
 
